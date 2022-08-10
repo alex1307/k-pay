@@ -56,7 +56,13 @@ async fn flush(buffer: &mut Vec<String>, sender: &mut Sender<Event>) {
         .has_headers(false)
         .from_reader(data.as_bytes());
     for result in rdr.deserialize() {
-        let event: Event = result.unwrap();
+        let event: Event = match result {
+            Ok(e) => e,
+            Err(e) => {
+                error!("{}", e);
+                continue;
+            }
+        };
         if let Err(_err) = sender.try_send(event) {
             error!("Failed sending event.");
         }
