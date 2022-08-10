@@ -1,0 +1,5 @@
+event_type,transaction_id,client_id,amount
+deposit,1001,1,100.00
+withdrawal,1002,1,50.0
+dispute,1002,1,
+resolve,1002,1,
